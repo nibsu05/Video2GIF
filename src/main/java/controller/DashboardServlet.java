@@ -28,10 +28,8 @@ public class DashboardServlet extends HttpServlet {
 
         VideoRequestBO requestBO = new VideoRequestBO();
         
-        // 1. Lấy danh sách các yêu cầu của người dùng
         List<VideoRequest> requests = requestBO.getRequestsForUser(user.getId());
         
-        // 2. Đặt vào request attribute và chuyển tiếp
         request.setAttribute("videoRequests", requests);
         request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
 	}

@@ -17,7 +17,6 @@ public class WorkerResponse implements Serializable {
         this.errorMessage = errorMessage;
     }
 
-    // Getters
     public int getRequestId() { return requestId; }
     public String getStatus() { return status; }
     public String getGifPath() { return gifPath; }
