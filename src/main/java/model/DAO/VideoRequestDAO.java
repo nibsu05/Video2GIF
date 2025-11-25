@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,34 @@ public class VideoRequestDAO extends BaseDAO {
         req.setStart_time(rs.getString("start_time"));
         req.setEnd_time(rs.getString("end_time"));
         return req;
+    }
+
+
+    public int saveNewRequest(VideoRequest request) {
+        String sql = "INSERT INTO video_requests (user_id, original_video_name, video_path, gif_path, status, start_time, end_time) VALUES (?, ?, ?, NULL, ?, ?, ?)";
+        try (Connection cnn = getConnection();
+             PreparedStatement ps = cnn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            ps.setInt(1, request.getUser_id());
+            ps.setString(2, request.getOriginal_video_name());
+            ps.setString(3, request.getVideo_path());
+            ps.setString(4, request.getStatus());
+            ps.setString(5, request.getStart_time());
+            ps.setString(6, request.getEnd_time());
+            
+            int affectedRows = ps.executeUpdate();
+            
+            if (affectedRows > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; 
     }
 
     public List<VideoRequest> getRequestsByUserId(Integer userId) {
