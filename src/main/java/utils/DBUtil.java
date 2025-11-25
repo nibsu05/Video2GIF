@@ -2,22 +2,28 @@ package utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class DBUtil {
-	public DBUtil() {
-		
-	}
-	
-	public static Connection getConnection(){
-		Connection cnn = null;
+    
+    private static final Logger LOGGER = Logger.getLogger(DBUtil.class.getName());
+    
+    public static Connection getConnection(){
+        Connection cnn = null;
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			cnn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dut-video2gif", "root", "123456");
-			return cnn;
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return cnn;
-	}
+        try {
+            Class.forName(ApplicationConfig.DB_DRIVER);
+            cnn = DriverManager.getConnection(
+                ApplicationConfig.DB_URL, 
+                ApplicationConfig.DB_USER, 
+                ApplicationConfig.DB_PASSWORD
+            );
+            return cnn;
+        } catch(Exception e) {
+            LOGGER.log(Level.SEVERE, "Không thể kết nối CSDL!", e);
+        }
+        return cnn;
+    }
 }

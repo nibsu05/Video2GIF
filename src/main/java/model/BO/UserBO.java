@@ -16,9 +16,6 @@ public class UserBO {
 		return userDAO.authenticateUser(username, password);
 	}
 	
-	public User getUserByUsername(String username) {
-		return userDAO.getUserByUsername(username);
-	}
     
     public boolean registerNewUser(String username, String plainPassword, String email) {
         if (userDAO.isUsernameTaken(username)) {

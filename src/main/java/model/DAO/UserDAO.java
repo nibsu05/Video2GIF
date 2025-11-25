@@ -43,24 +43,6 @@ public class UserDAO extends BaseDAO {
     }
 
 
-    public User getUserByUsername(String username) {
-        String sql = "SELECT * FROM users WHERE username = ?";
-        
-        try (Connection conn = getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            ps.setString(1, username);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapResultSetToUser(rs);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public boolean isUsernameTaken(String username) {
         String sql = "SELECT 1 FROM users WHERE username = ?";
         try (Connection conn = getConnection();

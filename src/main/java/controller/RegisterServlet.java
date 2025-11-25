@@ -27,7 +27,6 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String confirmPassword = request.getParameter("confirm_password");
         
-        // 1. Kiểm tra mật khẩu khớp
         if (!password.equals(confirmPassword)) {
             response.sendRedirect("RegisterServlet?error=mismatch");
             return;
@@ -35,25 +34,19 @@ public class RegisterServlet extends HttpServlet {
 
 		UserBO userBO = new UserBO();
         
-        // 2. Thực hiện đăng ký (BO sẽ hash password và kiểm tra username)
 		boolean success = userBO.registerNewUser(username, password, email);
         
 		if (success) {
-            // Đăng ký thành công, chuyển hướng đến trang Đăng nhập
-            // Đặt User object vào session với key THỐNG NHẤT là "username"
-            // (Tuỳ chọn: có thể đăng nhập luôn, ở đây ta chuyển về Login)
             User user = userBO.login(username, password);
             if(user != null) {
                 request.getSession().setAttribute("username", user);
                 response.sendRedirect("DashboardServlet?status=register_success");
                 return;
             } else {
-                // Đăng ký thành công nhưng đăng nhập tự động thất bại (rất hiếm)
                 response.sendRedirect("LoginServlet?status=register_success");
                 return;
             }
 		} else {
-            // Đăng ký thất bại (có thể do username đã tồn tại)
 			response.sendRedirect("RegisterServlet?error=usertaken");
 		}
 	}

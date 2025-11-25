@@ -30,10 +30,10 @@
                             Chọn video và khoảng thời gian bạn muốn dùng để tạo GIF
                         </p>
 
-                        <form action="UploadServlet" method="post" enctype="multipart/form-data">
+                        <form id="uploadForm" action="UploadServlet" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Chọn Video</label>
-                                <input type="file" name="videoFile" accept="video/*" required>
+                                <input type="file" id="videoFile" name="videoFile" accept="video/*" required>
                             </div>
 
                             <div class="form-group">
@@ -63,6 +63,26 @@
                 <div class="footer">
                     &copy; 2025 Video2GIF Project. All rights reserved.
                 </div>
+                
+                <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            const fileInput = document.getElementById('videoFile');
+            
+            if (fileInput.files.length === 0) {
+                alert('Vui lòng chọn file video.');
+                event.preventDefault();
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const MAX_SIZE = 100 * 1024 * 1024; 
+            
+            if (file.size > MAX_SIZE) {
+                alert('Lỗi: Kích thước tệp tin (' + (file.size / (1024 * 1024)).toFixed(2) + ' MB) vượt quá giới hạn 100MB. Vui lòng chọn tệp nhỏ hơn.');
+                event.preventDefault();
+            }
+        });
+    </script>
 
             </body>
 

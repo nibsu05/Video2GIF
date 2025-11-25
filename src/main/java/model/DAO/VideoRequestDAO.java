@@ -25,8 +25,9 @@ public class VideoRequestDAO extends BaseDAO {
         return req;
     }
 
+
     public int saveNewRequest(VideoRequest request) {
-        String sql = "INSERT INTO video_requests (user_id, original_video_name, video_path, status, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO video_requests (user_id, original_video_name, video_path, gif_path, status, start_time, end_time) VALUES (?, ?, ?, NULL, ?, ?, ?)";
         try (Connection cnn = getConnection();
              PreparedStatement ps = cnn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             

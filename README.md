@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `video_requests` (
         *   URL: `jdbc:mysql://localhost:3306/dut-video2gif`
         *   User: `root`
         *   Pass: `123456`
-    *   Nếu cấu hình MySQL của bạn khác, hãy sửa file `src/main/java/utils/DBUtil.java`.
+    *   Nếu cấu hình MySQL của bạn khác, hãy sửa file `src/main/java/utils/ApplicationConfig.java`.
 
 ---
 
@@ -125,4 +125,4 @@ CREATE TABLE IF NOT EXISTS `video_requests` (
 *   **Lỗi FFmpeg:**
     *   Đảm bảo bạn đã cài FFmpeg và gõ được lệnh `ffmpeg -version` trong CMD.
 *   **Lỗi Kết nối Database:**
-    *   Đảm bảo MySQL Server đang chạy và mật khẩu trong `DBUtil.java` là chính xác.
+    *   Đảm bảo MySQL Server đang chạy và mật khẩu trong `ApplicationConfig.java` là chính xác.
